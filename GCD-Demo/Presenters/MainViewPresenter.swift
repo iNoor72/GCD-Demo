@@ -8,7 +8,6 @@
 import Foundation
 
 protocol MainPresenterDeleagte {
-//    var delegate: MainViewPresenter {get set}
     var articles: Articles {get set}
     func fetchData()
     func showData()
@@ -26,6 +25,23 @@ class MainViewPresenter: MainPresenterDeleagte {
     //var delegate: MainViewPresenter
     
     func fetchData() {
+        let url = URL(string: Constants.apiKey)!
+        if let data = try? Data(contentsOf: url){
+            //Data received, parse it
+            parse(data: data)
+            let task = URLSession.shared.dataTask(with: url)
+                task.resume()
+            } else {
+                print("error fetching data.")
+            }
+    }
+    
+    private func parse(data: Data) {
+        var articles = [Article]()
+            if let decoder = try? JSONDecoder().decode(Articles.self, from: data) {
+                articles = decoder.articles
+                print(articles)
+        }
     }
     
     func showData() {

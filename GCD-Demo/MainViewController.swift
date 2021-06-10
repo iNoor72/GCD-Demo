@@ -14,13 +14,13 @@ protocol MainViewProtocol: AnyObject {
 class MainViewController: UIViewController, MainViewProtocol {
     
     @IBOutlet weak var tableView: UITableView!
-    var network = Networking()
+    var delegate : MainPresenterDeleagte?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        network.fetchArticles()
+        delegate = MainViewPresenter(view: self)
         
     }
     
