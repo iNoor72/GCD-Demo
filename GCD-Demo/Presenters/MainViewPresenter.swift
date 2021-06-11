@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MainPresenterDeleagte {
-    var articles: Articles {get set}
+    var articlesObject: Articles {get set}
     func fetchData()
     func showData()
 }
@@ -16,38 +16,36 @@ protocol MainPresenterDeleagte {
 class MainViewPresenter: MainPresenterDeleagte {
     
     weak var view : MainViewProtocol?
-    var articles: Articles = Articles(articles: [Article]())
+    var articlesObject: Articles = Articles(articles: [Article]())
     
     init(view: MainViewProtocol) {
         self.view = view
     }
     
-    //var delegate: MainViewPresenter
-    
     func fetchData() {
-        let url = URL(string: Constants.apiKey)!
-        if let data = try? Data(contentsOf: url){
-            //Data received, parse it
-            parse(data: data)
-            let task = URLSession.shared.dataTask(with: url)
-                task.resume()
-            } else {
-                print("error fetching data.")
-            }
+        DispatchQueue(label: "FetchingData", qos: .background).async { [weak self] in
+            let url = URL(string: "https://newsapi.org/v2/everything?q=Apple&from=2021-06-09&sortBy=popularity&apiKey=\(Constants.apiKey)")!
+            if let data = try? Data(contentsOf: url){
+                self?.parse(data: data)
+                print("Data fetched and parsed correctly.")
+                self?.showData()
+                } else {
+                    print("error fetching data.")
+                }
+        }
     }
     
     private func parse(data: Data) {
-        var articles = [Article]()
-            if let decoder = try? JSONDecoder().decode(Articles.self, from: data) {
-                articles = decoder.articles
-                print(articles)
+            if let decoder = try? JSONDecoder().decode([Article].self, from: data) {
+                articlesObject.articles = decoder
+                print(articlesObject)
         }
     }
     
     func showData() {
-        view?.showData()
+        DispatchQueue.main.async {
+            self.view?.showData()
+        }
     }
-    
-    
     
 }

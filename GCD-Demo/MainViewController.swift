@@ -9,6 +9,7 @@ import UIKit
 
 protocol MainViewProtocol: AnyObject {
     func showData()
+    func reloadTableViewData()
 }
 
 class MainViewController: UIViewController, MainViewProtocol {
@@ -21,13 +22,43 @@ class MainViewController: UIViewController, MainViewProtocol {
         tableView.delegate = self
         tableView.dataSource = self
         delegate = MainViewPresenter(view: self)
-        
+        delegate?.fetchData()
+        showData()
     }
     
     func showData() {
-        
+        reloadTableViewData()
+    }
+    
+    func reloadTableViewData() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     
 }
 
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return delegate?.articlesObject.articles.count ?? 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = delegate?.articlesObject.articles[indexPath.row].title
+        cell.detailTextLabel?.text = delegate?.articlesObject.articles[indexPath.row].description
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let destination = storyboard?.instantiateViewController(identifier: "DetailsViewController") as! DetailsViewController
+        
+        navigationController?.pushViewController(destination, animated: true)
+        
+    }
+    
+}
