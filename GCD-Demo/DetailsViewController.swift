@@ -12,16 +12,20 @@ protocol DetailsViewProtocol: AnyObject {
 }
 
 class DetailsViewController: UIViewController, DetailsViewProtocol {
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var publishedAtLabel: UILabel!
+    @IBOutlet weak var contentText: UITextView!
     
     var delegate: DetailsViewDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        delegate = DetailsViewPresenter(view: self)
     }
     
     func showData() {
-        
+        titleLabel.text = delegate?.artice?.title
+        publishedAtLabel.text = delegate?.artice?.publishedAt
+        contentText.text = delegate?.artice?.content
     }
 
 }

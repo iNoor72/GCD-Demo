@@ -9,7 +9,7 @@ import UIKit
 
 protocol MainViewProtocol: AnyObject {
     func showData()
-    func reloadTableViewData()
+    //func reloadTableViewData()
 }
 
 class MainViewController: UIViewController, MainViewProtocol {
@@ -56,6 +56,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let destination = storyboard?.instantiateViewController(identifier: "DetailsViewController") as! DetailsViewController
+        destination.delegate = DetailsViewPresenter(view: destination, artice: self.delegate?.articlesObject.articles[indexPath.row] ?? Article(title: "", description: "", publishedAt: "", content: ""))
         
         navigationController?.pushViewController(destination, animated: true)
         

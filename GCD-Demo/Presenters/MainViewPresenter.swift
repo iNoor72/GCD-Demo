@@ -8,9 +8,8 @@
 import Foundation
 
 protocol MainPresenterDeleagte {
-    var articlesObject: Articles {get set}
+    var articlesObject: Articles {get}
     func fetchData()
-    func showData()
 }
 
 class MainViewPresenter: MainPresenterDeleagte {
@@ -24,11 +23,10 @@ class MainViewPresenter: MainPresenterDeleagte {
     
     func fetchData() {
         DispatchQueue(label: "FetchingData", qos: .background).async { [weak self] in
-            let url = URL(string: "https://newsapi.org/v2/everything?q=Apple&from=2021-06-09&sortBy=popularity&apiKey=\(Constants.apiKey)")!
+            let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=\(Constants.apiKey)")!
             if let data = try? Data(contentsOf: url){
                 self?.parse(data: data)
-                print("Data fetched and parsed correctly.")
-                self?.showData()
+                self?.view?.showData()
                 } else {
                     print("error fetching data.")
                 }
@@ -36,15 +34,15 @@ class MainViewPresenter: MainPresenterDeleagte {
     }
     
     private func parse(data: Data) {
-            if let decoder = try? JSONDecoder().decode([Article].self, from: data) {
-                articlesObject.articles = decoder
-                print(articlesObject)
-        }
-    }
+//            if let decoder = try? JSONDecoder().decode([Article].self, from: data) {
+//                articlesObject.articles = decoder
+//                print(articlesObject)
+//        }
     
-    func showData() {
-        DispatchQueue.main.async {
-            self.view?.showData()
+        do {
+            try articlesObject.articles = JSONDecoder().decode([Article].self, from: data)
+        } catch {
+            print("There was a problem decoding the data. \(error.localizedDescription)")
         }
     }
     

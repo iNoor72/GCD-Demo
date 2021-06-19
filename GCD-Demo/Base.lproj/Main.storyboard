@@ -72,13 +72,54 @@
                     <view key="view" contentMode="scaleToFill" id="6Ye-pt-JQQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmA-wm-Nqp">
+                                <rect key="frame" x="20" y="84" width="374" height="30.5"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="M7U-wu-8Ac">
+                                <rect key="frame" x="20" y="206.5" width="374" height="400"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="kMq-H5-Bxx"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8X-gY-b3f">
+                                <rect key="frame" x="20" y="122.5" width="374" height="24"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Zef-ow-z0N"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Zef-ow-z0N" firstAttribute="trailing" secondItem="M7U-wu-8Ac" secondAttribute="trailing" constant="20" id="BMK-Gs-zE0"/>
+                            <constraint firstItem="Zef-ow-z0N" firstAttribute="trailing" secondItem="DmA-wm-Nqp" secondAttribute="trailing" constant="20" id="Ds6-Hj-HGw"/>
+                            <constraint firstItem="M7U-wu-8Ac" firstAttribute="leading" secondItem="Zef-ow-z0N" secondAttribute="leading" constant="20" id="GyB-Iw-9xF"/>
+                            <constraint firstItem="J8X-gY-b3f" firstAttribute="top" secondItem="DmA-wm-Nqp" secondAttribute="bottom" constant="8" id="OZf-DH-ZN9"/>
+                            <constraint firstItem="DmA-wm-Nqp" firstAttribute="top" secondItem="Zef-ow-z0N" secondAttribute="top" constant="40" id="e7c-wA-YZY"/>
+                            <constraint firstItem="J8X-gY-b3f" firstAttribute="leading" secondItem="Zef-ow-z0N" secondAttribute="leading" constant="20" id="eMB-9v-CXI"/>
+                            <constraint firstItem="M7U-wu-8Ac" firstAttribute="top" secondItem="J8X-gY-b3f" secondAttribute="bottom" constant="60" id="hC8-KY-eAF"/>
+                            <constraint firstItem="Zef-ow-z0N" firstAttribute="trailing" secondItem="J8X-gY-b3f" secondAttribute="trailing" constant="20" id="q85-CM-nMB"/>
+                            <constraint firstItem="DmA-wm-Nqp" firstAttribute="leading" secondItem="Zef-ow-z0N" secondAttribute="leading" constant="20" id="wa1-ta-7h9"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="contentText" destination="M7U-wu-8Ac" id="hb2-2p-wwX"/>
+                        <outlet property="publishedAtLabel" destination="J8X-gY-b3f" id="fuw-Zq-dv2"/>
+                        <outlet property="titleLabel" destination="DmA-wm-Nqp" id="DFh-VF-akl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pQl-KW-FzR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1810" y="130"/>
+            <point key="canvasLocation" x="1808.6956521739132" y="129.91071428571428"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QzV-N6-SZF">
@@ -100,6 +141,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

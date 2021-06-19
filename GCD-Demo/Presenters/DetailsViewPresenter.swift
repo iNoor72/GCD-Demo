@@ -8,19 +8,16 @@
 import Foundation
 
 protocol DetailsViewDelegate {
-    func showData()
+    var artice: Article? {get set}
 }
 
 class DetailsViewPresenter: DetailsViewDelegate {
-    
     weak var view: DetailsViewProtocol?
+    var artice: Article?
     
-    init(view: DetailsViewProtocol) {
+    init(view: DetailsViewProtocol, artice: Article) {
         self.view = view
-    }
-    
-    func showData() {
-        view?.showData()
+        self.artice = artice
     }
     
     
