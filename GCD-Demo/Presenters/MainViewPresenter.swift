@@ -21,15 +21,24 @@ class MainViewPresenter: MainPresenterDeleagte {
         self.view = view
     }
     
+    //Background thread to fetch the articles from the API
     func fetchData() {
         DispatchQueue(label: "FetchingData", qos: .background).async { [weak self] in
-            let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=\(Constants.apiKey)")!
-            if let data = try? Data(contentsOf: url){
-                self?.parse(data: data)
-                self?.view?.showData()
-                } else {
-                    print("error fetching data.")
+            let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=\(Constants.apiKey)")
+            if let safeURL = url {
+                let session = URLSession(configuration: .default)
+                let task = session.dataTask(with: safeURL) { data, response, error in
+                    if error != nil {
+                        print("There was problem fetching data from URL. Error is: \(error?.localizedDescription)")
+                    }
+                    if let safeData = data {
+                        let dataString = String(data: safeData, encoding: .utf8)!
+                        print("Data retrieved for popular using URLSession")
+                        print(dataString)
+                    }
                 }
+                task.resume()
+            }
         }
     }
     
